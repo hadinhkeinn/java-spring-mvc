@@ -33,27 +33,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>haha@gmail.com</td>
-                                    <td>Ha Ha</td>
-                                    <td>
-                                        <button class="btn btn-success">View</button>
-                                        <button class="btn btn-warning mx-2">Update</button>
-                                        <button class="btn btn-danger">Delete</button>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>2</td>
-                                    <td>haha@gmail.com</td>
-                                    <td>Ha Ha</td>
-                                    <td>
-                                        <button class="btn btn-success">View</button>
-                                        <button class="btn btn-warning mx-2">Update</button>
-                                        <button class="btn btn-danger">Delete</button>
-                                    </td>
-                                </tr>
+                                <c:forEach var="user" items="${listUsers}">
+                                    <tr>
+                                        <td>${user.id}</td>
+                                        <td>${user.email}</td>
+                                        <td>${user.fullName}</td>
+                                        <td>
+                                            <button class="btn btn-success">View</button>
+                                            <button class="btn btn-warning mx-2">Update</button>
+                                            <button class="btn btn-danger">Delete</button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>
