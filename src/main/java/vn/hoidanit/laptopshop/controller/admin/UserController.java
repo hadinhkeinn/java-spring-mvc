@@ -1,4 +1,4 @@
-package vn.hoidanit.laptopshop.controller;
+package vn.hoidanit.laptopshop.controller.admin;
 
 import java.util.List;
 import org.springframework.stereotype.Controller;
@@ -47,7 +47,7 @@ public class UserController {
     public String getTableUserPage(Model model) {
         List<User> users = this.userService.getAllUsers();
         model.addAttribute("listUsers", users);
-        return "admin/user/table";
+        return "admin/user/show";
     }
 
     // Detail user page
@@ -55,7 +55,7 @@ public class UserController {
     public String getUserDetailPage(Model model, @PathVariable long id) {
         User user = this.userService.getUserById(id);
         model.addAttribute("user", user);
-        return "admin/user/user-detail";
+        return "admin/user/detail";
 
     }
 
