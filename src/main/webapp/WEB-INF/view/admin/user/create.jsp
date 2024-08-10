@@ -35,27 +35,45 @@
                                         <div class="col-md-6 col-12 mx-auto">
                                             <h3>Create a user</h3>
                                             <hr>
-                                            <form:form method="post" action="/admin/user/create"
+                                            <form:form class="row" method="post" action="/admin/user/create"
                                                 modelAttribute="newUser">
-                                                <div class="mb-3">
+                                                <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Email:</label>
                                                     <form:input path="email" type="email" class="form-control" />
                                                 </div>
-                                                <div class="mb-3">
+                                                <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Password:</label>
                                                     <form:input path="password" type="password" class="form-control" />
                                                 </div>
-                                                <div class="mb-3">
+
+                                                <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Fullname:</label>
                                                     <form:input path="fullName" type="text" class="form-control" />
                                                 </div>
+                                                <div class="mb-3 col-12 col-md-6">
+                                                    <label class="form-label">Phone:</label>
+                                                    <form:input path="phone" type="text" class="form-control" />
+                                                </div>
+
                                                 <div class="mb-3">
                                                     <label class="form-label">Address:</label>
                                                     <form:input path="address" type="text" class="form-control" />
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Phone:</label>
-                                                    <form:input path="phone" type="text" class="form-control" />
+                                                <div class="mb-3 col-12 col-md-6">
+                                                    <label for="formFile" class="form-label">Role:</label>
+                                                    <select class="form-select" aria-label="Default select example">
+                                                        <option value="admin">Admin</option>
+                                                        <option value="user" selected>User</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 col-12 col-md-6">
+                                                    <label for="avatarFile" class="form-label">Avatar:</label>
+                                                    <input class="form-control" type="file" id="avatarFile"
+                                                        accept=".png, .jpg, .jpeg">
+                                                </div>
+                                                <div class="col-12 mb-3">
+                                                    <img alt="Avatar Preview" style="max-height: 250px; display: none;"
+                                                        id="avatarPreview">
                                                 </div>
                                                 <button type="submit" class="btn btn-primary">Create</button>
                                             </form:form>
