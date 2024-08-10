@@ -47,8 +47,8 @@
                                         <div class="col-md-6 col-12 mx-auto">
                                             <h3>Create a user</h3>
                                             <hr>
-                                            <form:form class="row" method="post" action="/admin/user/create"
-                                                modelAttribute="newUser">
+                                            <form:form class="row" method="post" enctype="multipart/form-data"
+                                                action="/admin/user/create" modelAttribute="newUser">
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Email:</label>
                                                     <form:input path="email" type="email" class="form-control" />
@@ -73,15 +73,15 @@
                                                 </div>
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <label for="formFile" class="form-label">Role:</label>
-                                                    <select class="form-select" aria-label="Default select example">
-                                                        <option value="admin">Admin</option>
-                                                        <option value="user" selected>User</option>
-                                                    </select>
+                                                    <form:select class="form-select" path="role.name">
+                                                        <form:option value="ADMIN">Admin</form:option>
+                                                        <form:option value="USER">User</form:option>
+                                                    </form:select>
                                                 </div>
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <label for="avatarFile" class="form-label">Avatar:</label>
-                                                    <input class="form-control" type="file" id="avatarFile"
-                                                        accept=".png, .jpg, .jpeg">
+                                                    <input class="form-control" type="file" name="avatarFile"
+                                                        id="avatarFile" accept=".png, .jpg, .jpeg">
                                                 </div>
                                                 <div class="col-12 mb-3">
                                                     <img alt="Avatar Preview" style="max-height: 250px; display: none;"
