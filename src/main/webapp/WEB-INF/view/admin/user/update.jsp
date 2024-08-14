@@ -35,7 +35,8 @@
                                         <div class="col-md-6 col-12 mx-auto">
                                             <h3>Update a user</h3>
                                             <hr>
-                                            <form:form method="post" action="/admin/user/update" modelAttribute="user">
+                                            <form:form method="post" action="/admin/user/update"
+                                                modelAttribute="updatedUser">
                                                 <div class="mb-3" style="display: none;">
                                                     <label class="form-label">Id:</label>
                                                     <form:input path="id" type="text" class="form-control" />
@@ -46,8 +47,13 @@
                                                         disabled="true" />
                                                 </div>
                                                 <div class="mb-3">
+                                                    <c:set var="nameHasBindError">
+                                                        <form:errors path="fullName" cssClass="invalid-feedback" />
+                                                    </c:set>
                                                     <label class="form-label">Fullname:</label>
-                                                    <form:input path="fullName" type="text" class="form-control" />
+                                                    <form:input path="fullName" type="text"
+                                                        class="form-control ${not empty nameHasBindError? 'is-invalid':''}" />
+                                                    ${nameHasBindError}
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Address:</label>
@@ -69,7 +75,7 @@
                 </div>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
                     crossorigin="anonymous"></script>
-                <script src="js/scripts.js"></script>
+                <script src="/js/scripts.js"></script>
             </body>
 
             </html>

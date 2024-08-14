@@ -37,16 +37,16 @@ public class UserController {
     }
 
     // Home page
-    @RequestMapping("/")
-    public String getHomePage(Model model) {
-        List<User> users = userService.getAllUsersByEmail("congbao@gmail.com");
-        System.out.println(users);
-        String test = this.userService.handleHello();
-        model.addAttribute("eric", test);
-        model.addAttribute("dinkien", "From controller");
+    // @RequestMapping("/")
+    // public String getHomePage(Model model) {
+    // List<User> users = userService.getAllUsersByEmail("congbao@gmail.com");
+    // System.out.println(users);
+    // String test = this.userService.handleHello();
+    // model.addAttribute("eric", test);
+    // model.addAttribute("dinkien", "From controller");
 
-        return "hello";
-    }
+    // return "hello";
+    // }
 
     // Create user page
     @GetMapping("/admin/user/create")
@@ -76,7 +76,7 @@ public class UserController {
     @RequestMapping(value = "/admin/user/update/{id}", method = RequestMethod.GET)
     public String getUpdateUserPage(Model model, @PathVariable long id) {
         User user = this.userService.getUserById(id);
-        model.addAttribute("user", user);
+        model.addAttribute("updatedUser", user);
         return "admin/user/update";
     }
 
@@ -94,12 +94,17 @@ public class UserController {
     @PostMapping("/admin/user/create")
     public String handleCreateUser(Model model,
             @ModelAttribute("newUser") @Valid User user,
-            BindingResult bindingResult,
+            BindingResult newUserBindingResult,
             @RequestParam("avatarFile") MultipartFile file) {
 
-        List<FieldError> errors = bindingResult.getFieldErrors();
+        List<FieldError> errors = newUserBindingResult.getFieldErrors();
         for (FieldError error : errors) {
-            System.out.println(">>>>" + error.getObjectName() + " - " + error.getDefaultMessage());
+            System.out.println(">>>>" + error.getField() + " - " + error.getDefaultMessage());
+        }
+
+        // validate
+        if (newUserBindingResult.hasErrors()) {
+            return "/admin/user/create";
         }
 
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
