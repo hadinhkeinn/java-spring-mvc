@@ -18,6 +18,13 @@
                 <script>
                     $(document).ready(() => {
                         const productImg = $("#productImg");
+                        const orgImg = "${updatedProduct.image}";
+                        console.log(orgImg);
+                        if (orgImg) {
+                            const urlImage = "/images/product/" + orgImg;
+                            $("#imgPreview").attr("src", urlImage);
+                            $("#imgPreview").css({ "display": "block" });
+                        }
                         productImg.change(function (e) {
                             const imgURL = URL.createObjectURL(e.target.files[0]);
                             $("#imgPreview").attr("src", imgURL);
@@ -40,15 +47,19 @@
                                 <ol class="breadcrumb mb-4">
                                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
                                     <li class="breadcrumb-item">Products</li>
-                                    <li class="breadcrumb-item active">Create a Product</li>
+                                    <li class="breadcrumb-item active">Update a Product</li>
                                 </ol>
                                 <div class="mt-5">
                                     <div class="row">
                                         <div class="col-md-6 col-12 mx-auto">
-                                            <h3>Create a product</h3>
+                                            <h3>Update a product</h3>
                                             <hr>
                                             <form:form class="row" method="post" enctype="multipart/form-data"
-                                                action="/admin/product/create" modelAttribute="newProduct">
+                                                action="/admin/product/update" modelAttribute="updatedProduct">
+                                                <div class="mb-3" style="display: none;">
+                                                    <label class="form-label">Id:</label>
+                                                    <form:input path="id" type="text" class="form-control" />
+                                                </div>
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <c:set var="nameHasBindError">
                                                         <form:errors path="name" cssClass="invalid-feedback" />
@@ -128,7 +139,7 @@
                                                     <img alt="Product Image Preview"
                                                         style="max-height: 250px; display: none;" id="imgPreview">
                                                 </div>
-                                                <button type="submit" class="btn btn-primary">Create</button>
+                                                <button type="submit" class="btn btn-primary">Save</button>
                                             </form:form>
                                         </div>
                                     </div>
