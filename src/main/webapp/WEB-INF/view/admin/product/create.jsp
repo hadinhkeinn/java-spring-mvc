@@ -104,7 +104,8 @@
                                                         <form:option value="ASUS">Asus</form:option>
                                                         <form:option value="LENOVO">Lenovo</form:option>
                                                         <form:option value="DELL">Dell</form:option>
-
+                                                        <form:option value="LG">LG</form:option>
+                                                        <form:option value="ACER">Acer</form:option>
                                                     </form:select>
                                                 </div>
                                                 <div class="mb-3 col-12 col-md-6">

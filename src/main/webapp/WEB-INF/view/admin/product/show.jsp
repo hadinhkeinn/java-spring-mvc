@@ -52,7 +52,7 @@
                                                     <tr>
                                                         <td>${product.id}</td>
                                                         <td>${product.name}</td>
-                                                        <td>$${product.price}</td>
+                                                        <td>${product.price} VND</td>
                                                         <td>${product.factory}</td>
                                                         <td>
                                                             <a href="/admin/product/${product.id}"
