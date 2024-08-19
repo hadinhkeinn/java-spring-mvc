@@ -3,6 +3,8 @@ package vn.hoidanit.laptopshop.controller.client;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -15,6 +17,8 @@ import vn.hoidanit.laptopshop.service.ProductService;
 import vn.hoidanit.laptopshop.service.UserService;
 
 import org.springframework.web.bind.annotation.PostMapping;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class HomePageController {
@@ -51,12 +55,17 @@ public class HomePageController {
 
     // Handle register User
     @PostMapping("/register")
-    public String handleRegisterUser(@ModelAttribute RegisterDTO registerUser) {
-        User user = this.userService.registerDTOtoUser(registerUser);
-        String hashPassword = this.passwordEncoder.encode(user.getPassword());
-        user.setPassword(hashPassword);
-        user.setRole(this.userService.getRoleByName("USER"));
-        this.userService.handleSaveUser(user);
+    public String handleRegisterUser(@ModelAttribute @Valid RegisterDTO registerUser, BindingResult bindingResult) {
+        List<FieldError> errors = bindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(">>>>" + error.getField() + " - " + error.getDefaultMessage());
+        }
+
+        // User user = this.userService.registerDTOtoUser(registerUser);
+        // String hashPassword = this.passwordEncoder.encode(user.getPassword());
+        // user.setPassword(hashPassword);
+        // user.setRole(this.userService.getRoleByName("USER"));
+        // this.userService.handleSaveUser(user);
         return "redirect:/login";
     }
 
