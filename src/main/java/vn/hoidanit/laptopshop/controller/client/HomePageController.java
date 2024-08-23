@@ -52,6 +52,12 @@ public class HomePageController {
         return "client/homepage/show";
     }
 
+    // Access deny Page
+    @GetMapping("/access-deny")
+    public String getAccessDenyPage() {
+        return "client/auth/deny";
+    }
+
     // Handle register User
     @PostMapping("/register")
     public String handleRegisterUser(@ModelAttribute("registerUser") @Valid RegisterDTO registerDTO,
