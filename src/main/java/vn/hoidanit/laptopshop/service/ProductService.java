@@ -84,4 +84,8 @@ public class ProductService {
 
         }
     }
+
+    public Cart getUserCart(User user) {
+        return this.cartRepository.findByUser(user);
+    }
 }

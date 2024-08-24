@@ -4,9 +4,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import java.util.List;
 
+import vn.hoidanit.laptopshop.domain.Cart;
+import vn.hoidanit.laptopshop.domain.CartDetail;
 import vn.hoidanit.laptopshop.domain.Product;
+import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.ProductService;
+import vn.hoidanit.laptopshop.service.UserService;
+
 import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,9 +21,11 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class ItemController {
     private final ProductService productService;
+    private final UserService userService;
 
-    public ItemController(ProductService productService) {
+    public ItemController(ProductService productService, UserService userService) {
         this.productService = productService;
+        this.userService = userService;
     }
 
     @GetMapping("/product/{id}")
@@ -28,7 +36,13 @@ public class ItemController {
     }
 
     @GetMapping("/cart")
-    public String getUserCart(Model model) {
+    public String getUserCart(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        long id = (long) session.getAttribute("id");
+        User user = this.userService.getUserById(id);
+        Cart cart = this.productService.getUserCart(user) != null ? this.productService.getUserCart(user) : new Cart();
+        List<CartDetail> list = cart.getCartDetails();
+        model.addAttribute("listProduct", list);
         return "client/cart/show";
     }
 
