@@ -26,20 +26,20 @@
             } else {
                 $('.fixed-top').removeClass('shadow').css('top', 0);
             }
-        } 
+        }
     });
-    
-    
-   // Back to top button
-   $(window).scroll(function () {
-    if ($(this).scrollTop() > 300) {
-        $('.back-to-top').fadeIn('slow');
-    } else {
-        $('.back-to-top').fadeOut('slow');
-    }
+
+
+    // Back to top button
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 300) {
+            $('.back-to-top').fadeIn('slow');
+        } else {
+            $('.back-to-top').fadeOut('slow');
+        }
     });
     $('.back-to-top').click(function () {
-        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+        $('html, body').animate({ scrollTop: 0 }, 1500, 'easeInOutExpo');
         return false;
     });
 
@@ -52,27 +52,27 @@
         dots: true,
         loop: true,
         margin: 25,
-        nav : true,
-        navText : [
+        nav: true,
+        navText: [
             '<i class="bi bi-arrow-left"></i>',
             '<i class="bi bi-arrow-right"></i>'
         ],
         responsiveClass: true,
         responsive: {
-            0:{
-                items:1
+            0: {
+                items: 1
             },
-            576:{
-                items:1
+            576: {
+                items: 1
             },
-            768:{
-                items:1
+            768: {
+                items: 1
             },
-            992:{
-                items:2
+            992: {
+                items: 2
             },
-            1200:{
-                items:2
+            1200: {
+                items: 2
             }
         }
     });
@@ -86,27 +86,27 @@
         dots: true,
         loop: true,
         margin: 25,
-        nav : true,
-        navText : [
+        nav: true,
+        navText: [
             '<i class="bi bi-arrow-left"></i>',
             '<i class="bi bi-arrow-right"></i>'
         ],
         responsiveClass: true,
         responsive: {
-            0:{
-                items:1
+            0: {
+                items: 1
             },
-            576:{
-                items:1
+            576: {
+                items: 1
             },
-            768:{
-                items:2
+            768: {
+                items: 2
             },
-            992:{
-                items:3
+            992: {
+                items: 3
             },
-            1200:{
-                items:4
+            1200: {
+                items: 4
             }
         }
     });
@@ -133,19 +133,89 @@
 
     // Product Quantity
     $('.quantity button').on('click', function () {
+        let change = 0;
         var button = $(this);
         var oldValue = button.parent().parent().find('input').val();
         if (button.hasClass('btn-plus')) {
             var newVal = parseFloat(oldValue) + 1;
+            change = 1;
         } else {
-            if (oldValue > 0) {
+            if (oldValue > 1) {
                 var newVal = parseFloat(oldValue) - 1;
+                change = -1;
             } else {
-                newVal = 0;
+                newVal = 1;
             }
         }
-        button.parent().parent().find('input').val(newVal);
+        const input = button.parent().parent().find('input');
+        input.val(newVal);
+
+        // get price
+        const price = input.attr("data-cart-detail-price");
+        const id = input.attr("data-cart-detail-id");
+
+        const priceE = $(`p[data-cart-detail-id='${id}']`);
+        if (priceE) {
+            const newPrice = +price * newVal;
+            priceE.text(formatCurrency(newPrice.toFixed(2)) + " đ");
+        }
+
+        // update total price
+        const totalE = $(`p[data-cart-total-price]`);
+
+        if (totalE && totalE.length) {
+            const currentTotal = totalE.first().attr("data-cart-total-price");
+            let newTotal = +currentTotal;
+            if (change === 0) {
+                newTotal = + currentTotal;
+            }
+            else {
+                newTotal = change * (+price) + (+currentTotal);
+            }
+
+            change = 0;
+
+            // update
+            totalE?.each(function (index, e) {
+                //update text 
+                $(totalE[index]).text(formatCurrency(newTotal.toFixed(2)) + " đ");
+
+                //update data att
+                $(totalE[index]).attr("data-cart-total-price", newTotal);
+            })
+        }
     });
+
+    // Format currency
+    const priceE = $('p[data-cart-detail-price');
+    priceE.each(function (index, e) {
+        const price = + $(priceE[index]).attr("data-cart-detail-price");
+        $(priceE[index]).text(formatCurrency(price.toFixed(2)) + " đ");
+    });
+
+    const totalPriceE = $('p[data-cart-total-price]');
+    totalPriceE.each(function (index, e) {
+        const price = + $(totalPriceE[index]).attr("data-cart-total-price");
+        $(totalPriceE[index]).text(formatCurrency(price.toFixed(2)) + " đ");
+    });
+
+    const tPriceE = $('p[data-cart-detail-tPrice]');
+    tPriceE.each(function (index, e) {
+        const price = + $(tPriceE[index]).attr("data-cart-detail-tPrice");
+        $(tPriceE[index]).text(formatCurrency(price.toFixed(2)) + " đ");
+    });
+
+    function formatCurrency(value) {
+        const formatter = new Intl.NumberFormat('vi-VN', {
+            style: 'decimal',
+            minimumFractionDigits: 0,
+        });
+
+        let formatted = formatter.format(value);
+
+        formatted = formatted.replace(/\./g, ',');
+        return formatted;
+    }
 
 })(jQuery);
 

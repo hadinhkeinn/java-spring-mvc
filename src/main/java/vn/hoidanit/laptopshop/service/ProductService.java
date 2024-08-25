@@ -12,6 +12,7 @@ import vn.hoidanit.laptopshop.repository.CartRepository;
 import vn.hoidanit.laptopshop.repository.ProductRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -87,5 +88,23 @@ public class ProductService {
 
     public Cart getUserCart(User user) {
         return this.cartRepository.findByUser(user);
+    }
+
+    public void deleteCartDetail(long id, HttpSession session) {
+        Optional<CartDetail> cartDetailOptional = this.cartDetailRepository.findById(id);
+        if (cartDetailOptional.isPresent()) {
+            CartDetail cartDetail = cartDetailOptional.get();
+            Cart currentCart = cartDetail.getCart();
+            this.cartDetailRepository.deleteById(id);
+            long sum = currentCart.getSum();
+            if (sum > 1) {
+                currentCart.setSum(sum - 1);
+                session.setAttribute("sum", currentCart.getSum());
+                this.cartRepository.save(currentCart);
+            } else {
+                this.cartRepository.delete(currentCart);
+                session.setAttribute("sum", 0);
+            }
+        }
     }
 }
