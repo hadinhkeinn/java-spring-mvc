@@ -34,7 +34,22 @@
         </head>
 
         <body>
-            <h1>Cảm ơn vì em vì đã đến :3</h1>
+            <jsp:include page="../layout/header.jsp" />
+            <div class="container" style="margin-top: 150px;">
+                <div class="row">
+                    <div class="col-12 mt-5">
+                        <div class="alert alert-success" role="alert">
+                            Cảm ơn bạn đã đặt hàng, đơn hàng của bạn đã xác nhận thành công.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <jsp:include page="../layout/feature.jsp" />
+
+            <jsp:include page="../layout/footer.jsp" />
+
+
         </body>
 
         </html>
