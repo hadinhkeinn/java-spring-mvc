@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ItemController {
@@ -72,6 +73,11 @@ public class ItemController {
         return "client/cart/checkout";
     }
 
+    @GetMapping("/thanks")
+    public String getThanksPage() {
+        return "client/cart/thanks";
+    }
+
     // Add product to cart
     @PostMapping("/add-product-to-cart/{id}")
     public String handleAddProductToCart(@PathVariable long id, HttpServletRequest request) {
@@ -97,6 +103,19 @@ public class ItemController {
         List<CartDetail> list = (cart == null) ? new ArrayList<CartDetail>() : cart.getCartDetails();
         this.productService.handleUpdateCartBeforeCheckout(list);
         return "redirect:/checkout";
+    }
+
+    // Handle check out
+    @PostMapping("/place-order")
+    public String handlePlaceOrder(HttpServletRequest request, @RequestParam String receiverName,
+            @RequestParam String receiverAddress, @RequestParam String receiverPhone) {
+        User currentUser = new User();// null
+        HttpSession session = request.getSession(false);
+        long id = (long) session.getAttribute("id");
+        currentUser.setId(id);
+
+        this.productService.handlePlaceOrder(currentUser, session, receiverName, receiverAddress, receiverPhone);
+        return "redirect:/thanks";
     }
 
 }
