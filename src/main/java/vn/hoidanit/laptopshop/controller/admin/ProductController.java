@@ -42,7 +42,7 @@ public class ProductController {
     public String getDetailProductPage(Model model, @PathVariable long id) {
         Product product = this.productService.getProduct(id);
         model.addAttribute("product", product);
-        return "/admin/product/detail";
+        return "admin/product/detail";
     }
 
     // Create prd page
@@ -57,7 +57,7 @@ public class ProductController {
     public String getUpdateProductPage(Model model, @PathVariable long id) {
         Product product = this.productService.getProduct(id);
         model.addAttribute("updatedProduct", product);
-        return "/admin/product/update";
+        return "admin/product/update";
     }
 
     // Delete prd page
@@ -67,7 +67,7 @@ public class ProductController {
         prd.setId(id);
         model.addAttribute("product", prd);
         model.addAttribute("id", id);
-        return "/admin/product/delete";
+        return "admin/product/delete";
     }
 
     // handle create product
@@ -79,7 +79,7 @@ public class ProductController {
 
         // validate
         if (newProductBindingResult.hasErrors()) {
-            return "/admin/product/create";
+            return "admin/product/create";
         }
 
         String productImg = this.uploadService.handleSaveUploadFile(file, "product");
