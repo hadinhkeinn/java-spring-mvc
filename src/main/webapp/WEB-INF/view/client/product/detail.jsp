@@ -144,7 +144,7 @@
                                                 <input type="text" class="form-control d-none" value="${product.id}"
                                                     name="id">
                                                 <input type="text" class="form-control d-none" name="quantity"
-                                                    id="cartDetails0.quantity">
+                                                    id="cartDetails0.quantity" value="1">
 
                                                 <button
                                                     class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
