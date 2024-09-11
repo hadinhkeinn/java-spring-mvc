@@ -7,6 +7,7 @@ import vn.hoidanit.laptopshop.repository.OrderRepository;
 
 import vn.hoidanit.laptopshop.domain.Order;
 import vn.hoidanit.laptopshop.domain.OrderDetail;
+import vn.hoidanit.laptopshop.domain.User;
 
 import java.util.List;
 
@@ -45,5 +46,9 @@ public class OrderService {
             currentOrder.setStatus(order.getStatus());
             this.orderRepository.save(currentOrder);
         }
+    }
+
+    public List<Order> getOrderByUser(User user) {
+        return this.orderRepository.findByUser(user);
     }
 }
