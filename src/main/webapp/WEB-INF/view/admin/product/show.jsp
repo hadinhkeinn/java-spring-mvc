@@ -72,6 +72,19 @@
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
+                                            <nav aria-label="page-nav">
+                                                <ul class="pagination justify-content-center">
+                                                    <li class="page-item"><a class="page-link" href="#">Previous</a>
+                                                    </li>
+                                                    <li class="page-item"><a class="page-link"
+                                                            href="/admin/product?page=1">1</a></li>
+                                                    <li class="page-item"><a class="page-link"
+                                                            href="/admin/product?page=2">2</a></li>
+                                                    <li class="page-item"><a class="page-link"
+                                                            href="/admin/product?page=3">3</a></li>
+                                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                                </ul>
+                                            </nav>
                                         </div>
                                     </div>
                                 </div>
