@@ -74,15 +74,19 @@
                                             </table>
                                             <nav aria-label="page-nav">
                                                 <ul class="pagination justify-content-center">
-                                                    <li class="page-item"><a class="page-link" href="#">Previous</a>
+                                                    <li class="page-item"><a
+                                                            class="page-link ${currPage == 1 ? 'disabled' : ''}"
+                                                            href="/admin/product?page=${currPage-1}">Previous</a>
                                                     </li>
-                                                    <li class="page-item"><a class="page-link"
-                                                            href="/admin/product?page=1">1</a></li>
-                                                    <li class="page-item"><a class="page-link"
-                                                            href="/admin/product?page=2">2</a></li>
-                                                    <li class="page-item"><a class="page-link"
-                                                            href="/admin/product?page=3">3</a></li>
-                                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                                    <c:forEach begin="1" end="${totalPages}" varStatus="loop">
+                                                        <li class="page-item"><a
+                                                                class="page-link ${currPage == loop.index ? 'active' : ''}"
+                                                                href="/admin/product?page=${loop.index}">${loop.index}</a>
+                                                        </li>
+                                                    </c:forEach>
+                                                    <li class="page-item"><a
+                                                            class="page-link ${currPage == totalPages ? 'disabled' : ''}"
+                                                            href="/admin/product?page=${currPage+1}">Next</a></li>
                                                 </ul>
                                             </nav>
                                         </div>
