@@ -1,7 +1,11 @@
 package vn.hoidanit.laptopshop.controller.admin;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,18 +40,6 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // Home page
-    // @RequestMapping("/")
-    // public String getHomePage(Model model) {
-    // List<User> users = userService.getAllUsersByEmail("congbao@gmail.com");
-    // System.out.println(users);
-    // String test = this.userService.handleHello();
-    // model.addAttribute("eric", test);
-    // model.addAttribute("dinkien", "From controller");
-
-    // return "hello";
-    // }
-
     // Create user page
     @GetMapping("/admin/user/create")
     public String getCreateUserPage(Model model) {
@@ -57,9 +49,20 @@ public class UserController {
 
     // Table user page
     @RequestMapping("/admin/user")
-    public String getTableUserPage(Model model) {
-        List<User> users = this.userService.getAllUsers();
-        model.addAttribute("listUsers", users);
+    public String getTableUserPage(Model model, @RequestParam("page") Optional<String> pageOptional) {
+        int page = 1;
+        try {
+            if (pageOptional.isPresent())
+                page = Integer.parseInt(pageOptional.get());
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        Pageable pageable = PageRequest.of(page - 1, 5);
+        Page<User> users = this.userService.getAllUsers(pageable);
+        model.addAttribute("listUsers", users.getContent());
+        model.addAttribute("currPage", page);
+        model.addAttribute("totalPages", users.getTotalPages());
         return "admin/user/show";
     }
 
