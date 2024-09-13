@@ -39,7 +39,7 @@ public class ProductController {
             if (pageOptional.isPresent())
                 page = Integer.parseInt(pageOptional.get());
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
 
         Pageable pageable = PageRequest.of(page - 1, 5);
