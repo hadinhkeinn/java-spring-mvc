@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,8 +38,13 @@ public class ItemController {
     }
 
     @GetMapping("/products")
-    public String getProductsPage(Model model, @RequestParam("page") Optional<String> pageOptional,
-            @RequestParam("name") Optional<String> nameOptional) {
+    public String getProductsPage(Model model,
+            @RequestParam("page") Optional<String> pageOptional,
+            @RequestParam("name") Optional<String> nameOptional,
+            @RequestParam("min-price") Optional<String> minPriceOptional,
+            @RequestParam("max-price") Optional<String> maxPriceOptional,
+            @RequestParam("factory") Optional<String> factoryOptional,
+            @RequestParam("price") Optional<String> priceOptional) {
         int page = 1;
         try {
             if (pageOptional.isPresent())
@@ -47,10 +53,30 @@ public class ItemController {
             e.printStackTrace();
         }
 
-        String name = nameOptional.get();
+        Pageable pageable = PageRequest.of(page - 1, 60);
+        String name = nameOptional.isPresent() ? nameOptional.get() : "";
 
-        Pageable pageable = PageRequest.of(page - 1, 6);
-        Page<Product> list = this.productService.getAllProducts(pageable, name);
+        // case 1
+        // double minPrice = minPriceOptional.isPresent() ?
+        // Double.parseDouble(minPriceOptional.get()) : 0;
+
+        // case 2
+        // double maxPrice = maxPriceOptional.isPresent() ?
+        // Double.parseDouble(maxPriceOptional.get()) : 0;
+
+        // case 3
+        // String factory = factoryOptional.isPresent() ? factoryOptional.get() : "";
+
+        // case 4
+        // List<String> factoryList = Arrays.asList(factoryOptional.get().split(","));
+
+        // case 5
+        // String price = priceOptional.isPresent() ? priceOptional.get() : "";
+
+        // case 6
+        List<String> price = Arrays.asList(priceOptional.get().split(","));
+
+        Page<Product> list = this.productService.getAllProductsWithSpec(pageable, price);
         model.addAttribute("listProducts", list.getContent());
         model.addAttribute("currPage", page);
         model.addAttribute("totalPages", list.getTotalPages());

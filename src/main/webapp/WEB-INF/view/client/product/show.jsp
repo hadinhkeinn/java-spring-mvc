@@ -159,7 +159,7 @@
 
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="price-5"
-                                                        value="tren-20-triệu">
+                                                        value="tren-20-trieu">
                                                     <label class="form-check-label" for="price-5">Trên 20 triệu</label>
                                                 </div>
                                             </div>
