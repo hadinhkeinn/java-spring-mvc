@@ -41,10 +41,10 @@ public class ItemController {
     public String getProductsPage(Model model,
             @RequestParam("page") Optional<String> pageOptional,
             @RequestParam("name") Optional<String> nameOptional,
-            @RequestParam("min-price") Optional<String> minPriceOptional,
-            @RequestParam("max-price") Optional<String> maxPriceOptional,
             @RequestParam("factory") Optional<String> factoryOptional,
-            @RequestParam("price") Optional<String> priceOptional) {
+            @RequestParam("target") Optional<String> targetOptional,
+            @RequestParam("price") Optional<String> priceOptional,
+            @RequestParam("sort") Optional<String> sortOptional) {
         int page = 1;
         try {
             if (pageOptional.isPresent())
@@ -74,9 +74,9 @@ public class ItemController {
         // String price = priceOptional.isPresent() ? priceOptional.get() : "";
 
         // case 6
-        List<String> price = Arrays.asList(priceOptional.get().split(","));
+        // List<String> price = Arrays.asList(priceOptional.get().split(","));
 
-        Page<Product> list = this.productService.getAllProductsWithSpec(pageable, price);
+        Page<Product> list = this.productService.getAllProducts(pageable, name);
         model.addAttribute("listProducts", list.getContent());
         model.addAttribute("currPage", page);
         model.addAttribute("totalPages", list.getTotalPages());
